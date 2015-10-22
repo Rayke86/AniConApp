@@ -1,0 +1,85 @@
+﻿<Page
+    x:Class="AniConApp.View.AniConMonthView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:AniConApp.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <CollectionViewSource x:Key="src" IsSourceGrouped="True"/>
+    </Page.Resources>
+   <!--<Page.DataContext>
+        <local:Month/>
+    </Page.DataContext>-->
+    
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.Resources>
+            <CollectionViewSource x:Key="src" IsSourceGrouped="True"/>
+        </Grid.Resources>
+
+
+       <!-- <ListView ItemsSource="{Binding Items}" x:Name="AniCons">
+            <ListView.Resources>
+                
+            </ListView.Resources>
+            <ListView.DataContext>
+                <local:Month/>
+            </ListView.DataContext>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel >
+                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Text="{Binding Location}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView> -->
+
+       <!-- <ListView ItemsSource="{Binding Items}" x:Name="AniCons" Margin="0,81,10,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel >
+                        <TextBlock Text="{Binding Name}" />
+                        <TextBlock Text="{Binding Location}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView> -->
+
+        <Hub Header="Anime Cons" IsZoomedInView="True" IsTabStop="True" x:Name="AniHub" DataContext="{Binding}">
+            <HubSection Width="362" x:Name="AniHub2" DataContext="{Binding}">
+                <!--<HubSection.DataContext>
+                    <local:Month/>
+                </HubSection.DataContext> -->
+                <DataTemplate>
+                    <ListView ItemsSource="{Binding}" x:Name="MonthView" Loaded="MonthView_Loaded" SelectionChanged="MonthView_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <ListView ItemsSource="{Binding Items}" Header="{Binding Name}" ItemClick="ListView_ItemClick" SelectionMode="Single" SelectionChanged="ListView_SelectionChanged" Loaded="ListView_Loaded">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel >
+                                                    <TextBlock Text="{Binding Name}" />
+                                                    <TextBlock Text="{Binding Location}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+
+                                    </ListView>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </DataTemplate>
+            </HubSection>
+        </Hub> 
+
+
+    </Grid>
+</Page>
