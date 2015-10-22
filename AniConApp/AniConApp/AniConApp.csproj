@@ -121,6 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Chibi-Holo-Big-Apple-holo-the-wise-wolf-21301345-438-436.jpg" />
+    <Content Include="Assets\cons.xml" />
     <Content Include="Assets\icon_150.png" />
     <Content Include="Assets\icon_310.png" />
     <Content Include="Assets\icon_44.png" />
@@ -156,9 +157,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

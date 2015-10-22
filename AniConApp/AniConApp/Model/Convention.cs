@@ -8,5 +8,15 @@ namespace AniConApp.Model
 {
     class Convention
     {
+        public string name { get; set; }
+        public int[] days { get; set; }
+        public string month { get; set; }
+        public string year { get; set; }
+
+        public Convention()
+        {
+
+        }
+        
     }
 }
