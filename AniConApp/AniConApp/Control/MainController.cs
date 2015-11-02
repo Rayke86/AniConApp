@@ -10,11 +10,19 @@ namespace AniConApp.Control
 {
     class MainController
     {
+        public List<Convention> conList;
+        public ConventionRepo repo;
 
         public MainController()
         {
             Debug.WriteLine("MainController started..........................");
-            ConventionRepo repo = new ConventionRepo("./assets/cons.xml");
+            repo = new ConventionRepo("./assets/cons.xml");
+            conList = repo.conList;
+        }
+
+        public List<Convention> getConventions()
+        {
+            return conList;
         }
     }
 }

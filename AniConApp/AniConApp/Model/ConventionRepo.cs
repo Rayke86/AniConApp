@@ -5,48 +5,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace AniConApp.Model
 {
     class ConventionRepo
     {
-        public List<Convention> conList;
+        public List<Convention> conList { get; set; }
 
         public ConventionRepo(String xmlFile)
         {
             conList = new List<Convention>();
+            this.conList = this.getConList(xmlFile);
+        }
 
-            XmlReader reader = XmlReader.Create(xmlFile);
+        private List<Convention> getConList(String xmlFile)
+        {
+            XDocument doc = XDocument.Load(xmlFile);
 
-            int count = 0;
-            while (reader.Read())
+            foreach (XElement element in doc.Descendants("cons").Nodes())
             {
-                if(reader.NodeType == XmlNodeType.Element && reader.Name == "cons")
-                {
-                    Debug.WriteLine("Found List................");
-                }
-                else //if(reader.NodeType == XmlNodeType.Element && reader.Name == "con")
-                {
-                    switch(reader.NodeType)
-                    {
-                        case XmlNodeType.Element:
-                            Debug.WriteLine("Element : " + reader.Name);
-                            Debug.WriteLine("");
-                            break;
-                        case XmlNodeType.Text:
-                            Debug.WriteLine("Text : " + reader.Value);
-                            Debug.WriteLine("---------------------");
-                            break;
-                    }
-                    /*count++;
-                    if(reader.Name == "name")
-                    {
+                String name = element.Element("name").Value;
+                String month = element.Element("month").Value;
+                String year = element.Element("year").Value;
+                String location = element.Element("location").Value;
+                String days = element.Element("days").Value;
 
-                        Debug.WriteLine("name of con = " + reader.Value);
-                    }
-                    Debug.WriteLine("found con.......nr of cons = " + count);*/
-                }
+                Convention con = new Convention(name, month,year,location,days);
+
+                conList.Add(con);              
             }
+
+            return conList;
         }
 
     }

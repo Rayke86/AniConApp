@@ -14,6 +14,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows.Data.Json;
+using AniConApp.Model;
+using System.Diagnostics;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -27,6 +29,8 @@ namespace AniConApp.View
         //public List<Month> Year = new List<Month>();
         public AniConInfoView aniInfoView = AniConInfoView.Instance;
         public ListView monthView = new ListView();
+
+        private List<Convention> conList;
 
         private List<Month> _year = new List<Month>();
         public List<Month> Year
@@ -61,9 +65,9 @@ namespace AniConApp.View
             June.Items.Add(con3);
             Year.Add(June);
             //AniCons.DataContext = August;
-            AniHub.DataContext = Year;
-            AniHub2.DataContext = new CollectionViewSource { Source = Year };
-            this.DataContext = Year;
+            //AniHub.DataContext = Year;
+            //AniHub2.DataContext = new CollectionViewSource { Source = Year };
+            //this.DataContext = Year;
             //AniHub2.DataContext = Year;
 
 
@@ -89,7 +93,114 @@ namespace AniConApp.View
             //August.Add("Abunai", Abunai);
             //Years.Add("Months", Months);
             
+        }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            conList = e.Parameter as List<Convention>;
+            if (conList != null)
+            {
+                //this.print(this.getDictByYear(conList));
+                AniHub.DataContext = this.getYear(conList);
+            }
+        }
+
+        private void print(Dictionary<String, Dictionary<Month, List<Convention>>> dict)
+        {
+            Debug.WriteLine("-----------------");
+            foreach (var item in dict)
+            {
+                Debug.WriteLine(item.Key);
+                foreach(var innerItem in item.Value)
+                {
+                    Debug.WriteLine(innerItem.Key.Name);
+                    foreach(Convention con in innerItem.Value)
+                    {
+                        Debug.WriteLine(con.name);
+                    }
+                    Debug.WriteLine("");
+                }
+                Debug.WriteLine("-----------------");
+            }
+        }
+
+        private List<Month> getYear(List<Convention> completeConList)//Dictionary<String, Dictionary<Month, List<Convention>>> getDictByYear(List<Convention> completeConList)
+        {
+            Month month;
+            List<Convention> listByMonth;
+
+            List<Month> year = new List<Month>();
+
+            Dictionary<String, Dictionary<Month, List <Convention>>> completeDict= new Dictionary<String, Dictionary<Month, List<Convention>>>();
+            Dictionary<Month, List<Convention>> yearDict2015 = new Dictionary<Month, List<Convention>>();
+            Dictionary<Month, List<Convention>> yearDict2016 = new Dictionary<Month, List<Convention>>();
+
+            foreach (Convention con in completeConList)
+            {
+                switch(con.year)
+                {
+                    case "2015":
+                        month = new Month();
+                        month.Name = con.month;
+                        if (!yearDict2015.ContainsKey(month))
+                        {
+                            listByMonth = getMonthList(month, completeConList);
+                            yearDict2015.Add(month,listByMonth);
+
+                            month.Items = this.getAniConsValuesList(month, completeConList);
+                            year.Add(month);
+                            
+                        }                        
+                        break;
+
+                    case "2016":
+                        month = new Month();
+                        month.Name = con.month;
+                        if (!yearDict2016.ContainsKey(month))
+                        {
+                            listByMonth = getMonthList(month, completeConList);
+                            yearDict2016.Add(month, listByMonth);
+                        }
+                        break;
+                }
+            }
+
+            completeDict.Add("2015", yearDict2015);
+            completeDict.Add("2016", yearDict2016);
+
+            return year;
+            //return completeDict;
+        }
+
+        private List<Convention> getMonthList(Month month, List<Convention> completeConList)
+        {
+            List<Convention> cons = new List<Convention>();
+
+            foreach(Convention con in completeConList)
+            {
+                if(con.month.Equals(month.Name))
+                {
+                    cons.Add(con);
+                }
+            }
+
+            return cons;
+        }
+
+        private List<AniconValues> getAniConsValuesList(Month month, List<Convention> completeConList)
+        {
+            List<AniconValues> list = new List<AniconValues>();
+
+            foreach (Convention con in completeConList)
+            {
+                if (con.month.Equals(month.Name))
+                {
+                    AniconValues ani = new AniconValues(con.name, con.location);
+                    list.Add(ani);
+                }
+            }
+
+            return list;
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)

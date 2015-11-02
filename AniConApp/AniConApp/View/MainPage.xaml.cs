@@ -34,7 +34,8 @@ namespace AniConApp
 
         private void gotoAnicons(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(AniConApp.View.AniConMonthView));
+            
+            this.Frame.Navigate(typeof(AniConApp.View.AniConMonthView), mainController.getConventions());
         }
     }
 }
