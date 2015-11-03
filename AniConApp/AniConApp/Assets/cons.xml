@@ -1,0 +1,51 @@
+<cons>
+  <con>
+    <name>MGC Experience</name>
+		<days>31</days>
+    <month>Oktober</month>
+		<year>2015</year>
+		<location>Nieuwegein</location>
+    <logoUrl>./assets/logo/mgc.jpg</logoUrl>
+	</con>
+	<con>
+		<name>Nishicon</name>
+		<days>14,15</days>
+    <month>November</month>  
+		<year>2015</year>
+		<location>Zoetermeer</location>
+    <logoUrl>./assets/logo/nishicon.png</logoUrl>
+	</con>
+  <con>
+		<name>Tsunacon</name>
+		<days>14</days>
+    <month>Februari</month>  
+		<year>2016</year>
+		<location>Rotterdam</location>
+    <logoUrl>./assets/logo/tsunacon.jpg</logoUrl>
+	</con>
+  <con>
+		<name>Comiccon</name>
+		<days>26,27</days>
+    <month>Maart</month>  
+		<year>2016</year>
+		<location>Oss</location>
+    <logoUrl>./assets/logo/dcc.png</logoUrl>
+	</con>
+  <con>
+		<name>Tomocon</name>
+		<days>9,10</days>
+    <month>April</month>  
+		<year>2016</year>
+		<location>Oss</location>
+    <logoUrl>./assets/logo/tomocon.jpg</logoUrl>
+	</con>  
+  <con>
+		<name>Animecon</name>
+		<days>10,11,12</days>
+    <month>Juni</month>  
+		<year>2016</year>
+		<location>Den Haag</location>
+    <logoUrl>./assets/logo/animecon.jpg</logoUrl>
+	</con>
+  
+</cons>
