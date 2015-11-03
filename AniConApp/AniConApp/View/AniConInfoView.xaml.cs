@@ -68,6 +68,8 @@ namespace AniConApp.View
 
         public async void getDestination2()
         {
+            RouteMap.Children.Clear();
+            RouteMap.Routes.Clear();
             Windows.Devices.Geolocation.Geopoint point = new Windows.Devices.Geolocation.Geopoint(new Windows.Devices.Geolocation.BasicGeoposition() { Latitude = 51.58914, Longitude = 4.74304 });
 
             MapLocationFinderResult result = await Windows.Services.Maps.MapLocationFinder.FindLocationsAsync(this.location, point);
@@ -98,6 +100,14 @@ namespace AniConApp.View
                             Windows.UI.Xaml.Controls.Maps.MapControl.SetNormalizedAnchorPoint(pin, new Point(0.5, 0.5));
 
                             currentLocation =  new Geopoint(new BasicGeoposition() { Latitude = pos.Coordinate.Latitude, Longitude = pos.Coordinate.Longitude });
+
+
+                            MapRouteFinderResult x = await MapRouteFinder.GetDrivingRouteAsync(currentLocation, Destination.Point);
+                            Windows.UI.Xaml.Controls.Maps.MapRouteView route = new Windows.UI.Xaml.Controls.Maps.MapRouteView(x.Route);
+                           
+                            RouteMap.Routes.Add(route);
+
+
                             break;
                         }
                 }
@@ -113,14 +123,17 @@ namespace AniConApp.View
             //Windows.Devices.Geolocation.Geolocator.RequestAccessAsync().Completed( 
 
 
+            Canvas pin2 = new Canvas();
+            Ellipse Ppin2 = new Ellipse() { Width = 20, Height = 20 };
+            Ppin2.Fill = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 0, 0, 0));
+            Ppin2.Margin = new Thickness(-12.5, -12.5, 0, 0);
+            pin2.Children.Add(Ppin2);
 
-            MapRouteFinderResult x = await MapRouteFinder.GetDrivingRouteAsync(currentLocation, Destination.Point);
-            Windows.UI.Xaml.Controls.Maps.MapRouteView route = new Windows.UI.Xaml.Controls.Maps.MapRouteView(x.Route);
-            RouteMap.Routes.Add(route);
 
-            RouteMap.Children.Add(pin);
-            Windows.UI.Xaml.Controls.Maps.MapControl.SetLocation(pin, result.Locations[0].Point);
-            Windows.UI.Xaml.Controls.Maps.MapControl.SetNormalizedAnchorPoint(pin, new Point(0.5, 0.5));
+
+            RouteMap.Children.Add(pin2);
+            Windows.UI.Xaml.Controls.Maps.MapControl.SetLocation(pin2, result.Locations[0].Point);
+            Windows.UI.Xaml.Controls.Maps.MapControl.SetNormalizedAnchorPoint(pin2, new Point(0.5, 0.5));
             RouteMap.ZoomLevel = 12;
             RouteMap.Center = result.Locations[0].Point;
             

@@ -230,12 +230,15 @@ namespace AniConApp.View
                 // aniInfoView.location = Year[0].Items[(sender as ListView).SelectedIndex].Location;
                 Window.Current.Content = aniInfoView;
                 //this.Frame.Navigate(aniInfoView.GetType(),aniInfoView);
+                
 
                 Convention con = Year.ElementAt(index).Items[(sender as ListView).SelectedIndex];
 
                 string location = con.location; //Year[index].Items[(sender as ListView).SelectedIndex].location;
                 string name = con.name; // _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].name;
                 aniInfoView.setInformation(location, name);
+
+                
             }
            // (sender as ListView).SelectedIndex = -1;
            
