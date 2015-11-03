@@ -29,8 +29,13 @@ namespace AniConApp.View
         //public List<Month> Year = new List<Month>();
         public AniConInfoView aniInfoView = AniConInfoView.Instance;
         public ListView monthView = new ListView();
+        public ListView yearView = new ListView();
+
 
         private List<Convention> conList;
+        private List<Year> years;
+        private List<Month> monthList = new List<Month>();
+        
 
         private List<Month> _year = new List<Month>();
         public List<Month> Year
@@ -100,45 +105,23 @@ namespace AniConApp.View
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            conList = e.Parameter as List<Convention>;
+            this.conList = e.Parameter as List<Convention>;
             if (conList != null)
             {
-                _year = this.getYear(conList);
-                AniHub.DataContext = _year;
+                years = getCons(conList);
+                AniHub2.DataContext = years;
             }
-        }
+        }      
 
-        private void print(Dictionary<String, Dictionary<Month, List<Convention>>> dict)
+        
+        private List<Year> getCons(List<Convention> completeConList)
         {
-            Debug.WriteLine("-----------------");
-            foreach (var item in dict)
-            {
-                Debug.WriteLine(item.Key);
-                foreach(var innerItem in item.Value)
-                {
-                    Debug.WriteLine(innerItem.Key.Name);
-                    foreach(Convention con in innerItem.Value)
-                    {
-                        Debug.WriteLine(con.name);
-                    }
-                    Debug.WriteLine("");
-                }
-                Debug.WriteLine("-----------------");
-            }
-        }
-
-        //temperarly returns list of 2015
-        private List<Month> getYear(List<Convention> completeConList)//Dictionary<String, Dictionary<Month, List<Convention>>> getDictByYear(List<Convention> completeConList)
-        {
+            int index;
             Month month;
-            List<Convention> listByMonth;
-
-            List<Month> year = new List<Month>();
-
-            Dictionary<String, Dictionary<Month, List <Convention>>> completeDict= new Dictionary<String, Dictionary<Month, List<Convention>>>();
-            Dictionary<Month, List<Convention>> yearDict2015 = new Dictionary<Month, List<Convention>>();
-            Dictionary<Month, List<Convention>> yearDict2016 = new Dictionary<Month, List<Convention>>();
-
+            List<Month> months2015 = new List<Month>();
+            List<Month> months2016 = new List<Month>();
+            years = new List<Year>();
+            
             foreach (Convention con in completeConList)
             {
                 switch(con.year)
@@ -146,40 +129,47 @@ namespace AniConApp.View
                     case "2015":
                         month = new Month();
                         month.Name = con.month;
-                        if (!yearDict2015.ContainsKey(month))
+                        index = months2015.FindIndex(item => item.Name == month.Name);
+                        if(index < 0)
                         {
-                            listByMonth = getMonthList(month, completeConList);
-                            yearDict2015.Add(month,listByMonth);
-
-                            month.Items = this.getMonthList(month, completeConList);
-                            year.Add(month);
-                            
-                        }                        
+                            Debug.WriteLine(month.Name);
+                            month.Items = setConventions(month, completeConList);
+                            months2015.Add(month);
+                        }
+                         
                         break;
 
                     case "2016":
                         month = new Month();
                         month.Name = con.month;
-                        if (!yearDict2016.ContainsKey(month))
+                        index = months2016.FindIndex(item => item.Name == month.Name);
+                        if (index < 0)
                         {
-                            listByMonth = getMonthList(month, completeConList);
-                            yearDict2016.Add(month, listByMonth);
+                            Debug.WriteLine(month.Name);
+                            month.Items = setConventions(month, completeConList);
+                            months2016.Add(month);
                         }
                         break;
                 }
             }
+            Year year2015 = new Year();
+            year2015.Name = "2015";
+            year2015.months = months2015;
 
-            completeDict.Add("2015", yearDict2015);
-            completeDict.Add("2016", yearDict2016);
+            Year year2016 = new Year();
+            year2016.Name = "2016";
+            year2016.months = months2016;
 
-            return year;
-            //return completeDict;
+            years.Add(year2015);
+            years.Add(year2016);
+
+            return years;
         }
 
-        private List<Convention> getMonthList(Month month, List<Convention> completeConList)
+        private List<Convention> setConventions(Month month, List<Convention> completeConList)
         {
             List<Convention> cons = new List<Convention>();
-
+            
             foreach(Convention con in completeConList)
             {
                 if(con.month.Equals(month.Name))
@@ -191,50 +181,37 @@ namespace AniConApp.View
             return cons;
         }
 
-        private List<AniconValues> getAniConsValuesList(Month month, List<Convention> completeConList)
-        {
-            List<AniconValues> list = new List<AniconValues>();
-
-            foreach (Convention con in completeConList)
-            {
-                if (con.month.Equals(month.Name))
-                {
-                    AniconValues ani = new AniconValues(con.name, con.location);
-                    list.Add(ani);
-                }
-            }
-
-            return list;
-        }
-
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
+        {/*
             String s = "test";
             aniInfoView.name = ((AniconValues)e.ClickedItem).Name;
             aniInfoView.location = ((AniconValues)e.ClickedItem).Location;
             System.Diagnostics.Debug.Write(((AniconValues)e.ClickedItem).Name);
             //this.Frame.Navigate(typeof(AniConInfoView));
+            */
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((sender as ListView).SelectedIndex != -1)
             {
-                String s = ((sender as ListView).DataContext as Month).Name;
-                int index = monthView.Items.IndexOf((sender as ListView).DataContext as Month);
+                var s = ((sender as ListView).DataContext as Month);
+                
+                int monthIndex = yearView.Items.IndexOf((sender as ListView).DataContext as Year);
+
                 string p = monthView.Items[0].GetType().ToString();
 
-                Debug.WriteLine("sender : " + index);
+                //(yearView.Items[0] as monthView).
 
                 //aniInfoView.name = ((sender as ListView).SelectedItem as AniconValues).Name;
                 // aniInfoView.location = Year[0].Items[(sender as ListView).SelectedIndex].Location;
                 Window.Current.Content = aniInfoView;
                 //this.Frame.Navigate(aniInfoView.GetType(),aniInfoView);
 
-                Convention con = Year.ElementAt(index).Items[(sender as ListView).SelectedIndex];
-
-                string location = con.location; //Year[index].Items[(sender as ListView).SelectedIndex].location;
-                string name = con.name; // _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].name;
+                var con = ((sender as ListView).DataContext as Month).Items[(sender as ListView).SelectedIndex];
+                
+                string location = con.location; 
+                string name = con.name;    
                 aniInfoView.setInformation(location, name);
             }
            // (sender as ListView).SelectedIndex = -1;
@@ -251,26 +228,35 @@ namespace AniConApp.View
             monthView = sender as ListView;
         }
 
+        private void YearView_Loaded(object sender, RoutedEventArgs e)
+        {
+            yearView = sender as ListView;
+        }
+
+        private void YearView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            yearView = sender as ListView;
+        }
+
         private void ListView_Loaded(object sender, RoutedEventArgs e)
         {
             (sender as ListView).SelectedIndex = -1;
         }
     }
 
-    public class AniconValues
+    public class Year
     {
-        public AniconValues(String Name,String Location)
+        public Year()
         {
-            this.Name = Name;
-            this.Location = Location;
+            this.months = new List<Month>();
         }
 
         public string Name { get; set; }
-        public string Location { get; set; }
+        public List<Month> months { get; set; }
 
         public override string ToString()
         {
-            return Name.ToString();
+            return base.ToString();
         }
     }
 

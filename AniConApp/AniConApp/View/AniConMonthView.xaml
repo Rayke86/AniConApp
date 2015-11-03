@@ -56,7 +56,11 @@
                     <local:Month/>
                 </HubSection.DataContext> -->
                 <DataTemplate>
-                    <ListView ItemsSource="{Binding}" x:Name="MonthView" Loaded="MonthView_Loaded" SelectionChanged="MonthView_SelectionChanged">
+                    <ListView ItemsSource="{Binding}" x:Name="YearView" Loaded="YearView_Loaded" SelectionChanged="YearView_SelectionChanged">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                    <ListView ItemsSource="{Binding months}" x:Name="MonthView" Header="{Binding Name}" Loaded="MonthView_Loaded" SelectionChanged="MonthView_SelectionChanged">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
@@ -71,6 +75,10 @@
                                         </ListView.ItemTemplate>
 
                                     </ListView>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
