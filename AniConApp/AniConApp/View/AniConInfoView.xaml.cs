@@ -17,6 +17,7 @@ using Windows.Services.Maps;
 using Windows.Devices.Geolocation;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -111,13 +112,11 @@ namespace AniConApp.View
 
 
             //Windows.Devices.Geolocation.Geolocator.RequestAccessAsync().Completed( 
-
-
-
+            
             MapRouteFinderResult x = await MapRouteFinder.GetDrivingRouteAsync(currentLocation, Destination.Point);
             Windows.UI.Xaml.Controls.Maps.MapRouteView route = new Windows.UI.Xaml.Controls.Maps.MapRouteView(x.Route);
             RouteMap.Routes.Add(route);
-
+            
             RouteMap.Children.Add(pin);
             Windows.UI.Xaml.Controls.Maps.MapControl.SetLocation(pin, result.Locations[0].Point);
             Windows.UI.Xaml.Controls.Maps.MapControl.SetNormalizedAnchorPoint(pin, new Point(0.5, 0.5));

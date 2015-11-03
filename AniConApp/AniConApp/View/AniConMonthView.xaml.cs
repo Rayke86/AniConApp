@@ -50,56 +50,7 @@ namespace AniConApp.View
 
             //Resources.Values.ToList();
 
-            aniInfoView.setMonthView(this);
-            
-            /*
-            //ObservableCollection<Month> Years2 = new ObservableCollection<Month>();
-            Month August = new Month();
-            August.Name = "August";
-            Month June = new Month();
-            June.Name = "June";
-            AniconValues Abunai = new AniconValues("Abunai", "Veldhoven,Locht 117");
-            August.Items.Add(Abunai);
-
-            AniconValues con2 = new AniconValues("Con2", "Breda,Abdijstraat 1");
-            August.Items.Add(con2);
-
-            AniconValues TsunaCon = new AniconValues("TsunaCon", "Rotterdam,Rembrandtlaan 220");
-            August.Items.Add(TsunaCon);
-            Year.Add(August);
-
-            AniconValues con3 = new AniconValues("Con3", "Prinsenbeek,Witte Baan 1");
-            June.Items.Add(con3);
-            Year.Add(June);
-            //AniCons.DataContext = August;
-            //AniHub.DataContext = Year;
-            //AniHub2.DataContext = new CollectionViewSource { Source = Year };
-            //this.DataContext = Year;
-            //AniHub2.DataContext = Year;
-
-            */
-
-
-            //var aniCons = (CollectionViewSource)Resources["src"];
-
-
-            //JsonObject aniConsYear = new JsonObject();
-            //JsonArray Year = new JsonArray();
-            //aniConsYear.Add("2015", Year);
-            //JsonObject August = new JsonObject();
-            //Year.Add(August);
-            //JsonObject Years = new JsonObject();
-            //JsonObject Years = new JsonObject();
-            //JsonArray Months = new JsonArray();
-            //JsonObject August = new JsonObject();
-            ////Years.Add("August", August);
-            //Months.Add(August);
-            //JsonObject Abunai = new JsonObject();
-            //Abunai.Add("Name", JsonValue.CreateStringValue("Abunai"));
-            //Abunai.Add("Location", JsonValue.CreateStringValue("Koningshof Veldhoven"));
-            //Abunai.Add("Month", JsonValue.CreateStringValue("August"));
-            //August.Add("Abunai", Abunai);
-            //Years.Add("Months", Months);
+            aniInfoView.setMonthView(this);           
             
         }
 
@@ -132,7 +83,6 @@ namespace AniConApp.View
                         index = months2015.FindIndex(item => item.Name == month.Name);
                         if(index < 0)
                         {
-                            Debug.WriteLine(month.Name);
                             month.Items = setConventions(month, completeConList);
                             months2015.Add(month);
                         }
@@ -145,7 +95,6 @@ namespace AniConApp.View
                         index = months2016.FindIndex(item => item.Name == month.Name);
                         if (index < 0)
                         {
-                            Debug.WriteLine(month.Name);
                             month.Items = setConventions(month, completeConList);
                             months2016.Add(month);
                         }
@@ -195,7 +144,7 @@ namespace AniConApp.View
         {
             if ((sender as ListView).SelectedIndex != -1)
             {
-                var s = ((sender as ListView).DataContext as Month);
+                /*var s = ((sender as ListView).DataContext as Month);
                 
                 int monthIndex = yearView.Items.IndexOf((sender as ListView).DataContext as Year);
 
@@ -207,7 +156,7 @@ namespace AniConApp.View
                 // aniInfoView.location = Year[0].Items[(sender as ListView).SelectedIndex].Location;
                 Window.Current.Content = aniInfoView;
                 //this.Frame.Navigate(aniInfoView.GetType(),aniInfoView);
-
+                */
                 var con = ((sender as ListView).DataContext as Month).Items[(sender as ListView).SelectedIndex];
                 
                 string location = con.location; 
