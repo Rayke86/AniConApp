@@ -4,7 +4,15 @@
 		<days>31</days>
     <month>Oktober</month>
 		<year>2015</year>
-		<location>Nieuwegein</location>
+		<location>Nieuwegein,Blokhoeve 2</location>
+    <logoUrl>./assets/logo/mgc.jpg</logoUrl>
+	</con>
+  <con>
+    <name>Fake Convention</name>
+		<days>2</days>
+    <month>Oktober</month>
+		<year>2015</year>
+		<location>Breda, Lovensdijkstraat 61</location>
     <logoUrl>./assets/logo/mgc.jpg</logoUrl>
 	</con>
 	<con>
@@ -12,7 +20,7 @@
 		<days>14,15</days>
     <month>November</month>  
 		<year>2015</year>
-		<location>Zoetermeer</location>
+		<location>Zoetermeer, scheglaan 12</location>
     <logoUrl>./assets/logo/nishicon.png</logoUrl>
 	</con>
   <con>
