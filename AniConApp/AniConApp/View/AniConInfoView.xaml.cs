@@ -14,6 +14,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Windows.UI.Xaml.Navigation;
 using Windows.Services.Maps;
+using Windows.Devices.Geolocation;
+using System.Threading.Tasks;
+using System.Threading;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -27,6 +30,8 @@ namespace AniConApp.View
 
         static readonly AniConInfoView _instance = new AniConInfoView();
         MapLocation Destination;
+        Geopoint currentLocation;
+        
 
         public static AniConInfoView Instance
         {
@@ -76,19 +81,42 @@ namespace AniConApp.View
 
             try
             {
-               // Windows.Devices.Geolocation.Geolocator.RequestAccessAsync().Completed()
+                // Windows.Devices.Geolocation.Geolocator.RequestAccessAsync().Completed()
+                var accesStatus = await Geolocator.RequestAccessAsync();
+
+                switch(accesStatus)
+                {
+                    case GeolocationAccessStatus.Allowed:
+                        {
+
+
+                            Geolocator geolocator = new Geolocator { DesiredAccuracy = 0 };
+
+                            Geoposition pos = await geolocator.GetGeopositionAsync();
+                            RouteMap.Children.Add(pin);
+                            Windows.UI.Xaml.Controls.Maps.MapControl.SetLocation(pin, new Geopoint(new BasicGeoposition() { Latitude = pos.Coordinate.Latitude, Longitude = pos.Coordinate.Longitude }));
+                            Windows.UI.Xaml.Controls.Maps.MapControl.SetNormalizedAnchorPoint(pin, new Point(0.5, 0.5));
+
+                            currentLocation =  new Geopoint(new BasicGeoposition() { Latitude = pos.Coordinate.Latitude, Longitude = pos.Coordinate.Longitude });
+                            break;
+                        }
+                }
                     
             }
             catch (Exception ex)
             {
 
             }
-            
+
 
 
             //Windows.Devices.Geolocation.Geolocator.RequestAccessAsync().Completed( 
 
-            //Windows.UI.Xaml.Controls.Maps.MapRouteView route = new Windows.UI.Xaml.Controls.Maps.MapRouteView()
+
+
+            MapRouteFinderResult x = await MapRouteFinder.GetDrivingRouteAsync(currentLocation, Destination.Point);
+            Windows.UI.Xaml.Controls.Maps.MapRouteView route = new Windows.UI.Xaml.Controls.Maps.MapRouteView(x.Route);
+            RouteMap.Routes.Add(route);
 
             RouteMap.Children.Add(pin);
             Windows.UI.Xaml.Controls.Maps.MapControl.SetLocation(pin, result.Locations[0].Point);
