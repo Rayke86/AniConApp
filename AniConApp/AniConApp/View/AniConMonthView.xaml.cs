@@ -46,6 +46,8 @@ namespace AniConApp.View
             //Resources.Values.ToList();
 
             aniInfoView.setMonthView(this);
+            
+            /*
             //ObservableCollection<Month> Years2 = new ObservableCollection<Month>();
             Month August = new Month();
             August.Name = "August";
@@ -70,6 +72,7 @@ namespace AniConApp.View
             //this.DataContext = Year;
             //AniHub2.DataContext = Year;
 
+            */
 
 
             //var aniCons = (CollectionViewSource)Resources["src"];
@@ -147,7 +150,7 @@ namespace AniConApp.View
                             listByMonth = getMonthList(month, completeConList);
                             yearDict2015.Add(month,listByMonth);
 
-                            month.Items = this.getAniConsValuesList(month, completeConList);
+                            month.Items = this.getMonthList(month, completeConList);
                             year.Add(month);
                             
                         }                        
@@ -223,8 +226,8 @@ namespace AniConApp.View
                 // aniInfoView.location = Year[0].Items[(sender as ListView).SelectedIndex].Location;
                 Window.Current.Content = aniInfoView;
                 //this.Frame.Navigate(aniInfoView.GetType(),aniInfoView);
-                string location = _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].Location;
-                string name = _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].Name;
+                string location = _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].location;
+                string name = _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].name;
                 aniInfoView.setInformation(location, name);
             }
            // (sender as ListView).SelectedIndex = -1;
@@ -269,13 +272,11 @@ namespace AniConApp.View
     {
         public Month()
         {
-            this.Items = new List<AniconValues>();
+            this.Items = new List<Convention>();
         }
 
-
-
         public string Name { get; set; }
-        public List<AniconValues> Items { get; set; }
+        public List<Convention> Items { get; set; }
 
         public override string ToString()
         {

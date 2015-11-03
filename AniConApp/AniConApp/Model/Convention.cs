@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AniConApp.Model
 {
-    class Convention
+    public class Convention
     {
         public String name { get; set; }
         public List<int> days;
