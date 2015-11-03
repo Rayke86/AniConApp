@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.Data.Json;
 using AniConApp.Model;
 using System.Diagnostics;
+using Windows.UI;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -35,13 +36,6 @@ namespace AniConApp.View
         private List<Convention> conList;
         private List<Year> years;
         private List<Month> monthList = new List<Month>();
-        
-
-        private List<Month> _year = new List<Month>();
-        public List<Month> Year
-        {
-            get { return this._year; }
-        }
 
 
         public AniConMonthView()
@@ -49,6 +43,7 @@ namespace AniConApp.View
             this.InitializeComponent();
 
             //Resources.Values.ToList();
+
 
             aniInfoView.setMonthView(this);           
             
@@ -131,43 +126,25 @@ namespace AniConApp.View
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
-        {/*
-            String s = "test";
-            aniInfoView.name = ((AniconValues)e.ClickedItem).Name;
-            aniInfoView.location = ((AniconValues)e.ClickedItem).Location;
-            System.Diagnostics.Debug.Write(((AniconValues)e.ClickedItem).Name);
-            //this.Frame.Navigate(typeof(AniConInfoView));
-            */
+        {
+
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if ((sender as ListView).SelectedIndex != -1)
-            {
-                /*var s = ((sender as ListView).DataContext as Month);
-                
-                int monthIndex = yearView.Items.IndexOf((sender as ListView).DataContext as Year);
-
-                string p = monthView.Items[0].GetType().ToString();
-
-                //(yearView.Items[0] as monthView).
-
-                //aniInfoView.name = ((sender as ListView).SelectedItem as AniconValues).Name;
-                // aniInfoView.location = Year[0].Items[(sender as ListView).SelectedIndex].Location;
+            {                
                 Window.Current.Content = aniInfoView;
-                //this.Frame.Navigate(aniInfoView.GetType(),aniInfoView);
-
-                */
+                 
+                //get selected convention               
                 var con = ((sender as ListView).DataContext as Month).Items[(sender as ListView).SelectedIndex];
                 
                 string location = con.location; 
                 string name = con.name;  
                 
-                aniInfoView.setInformation(location, name);
-
-                
+                aniInfoView.setInformation(location, name);                
             }
-           // (sender as ListView).SelectedIndex = -1;
+           
            
         }
 
@@ -197,6 +174,7 @@ namespace AniConApp.View
         }
     }
 
+    //class that wil contain the months for that year
     public class Year
     {
         public Year()
@@ -213,7 +191,7 @@ namespace AniConApp.View
         }
     }
 
-
+    //class that wil contain the conventions for that month
     public class Month
     {
         public Month()

@@ -146,7 +146,7 @@ namespace AniConApp.View
         {
             this.location = location;
             // textBox.Text += location;
-            this.textBox.Text = name + "/" + location;
+            this.textBox.Text = name + "\n" + location;
             getDestination2();
 
         }
