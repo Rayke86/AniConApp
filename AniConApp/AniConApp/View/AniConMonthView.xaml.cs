@@ -103,8 +103,8 @@ namespace AniConApp.View
             conList = e.Parameter as List<Convention>;
             if (conList != null)
             {
-                //this.print(this.getDictByYear(conList));
-                AniHub.DataContext = this.getYear(conList);
+                _year = this.getYear(conList);
+                AniHub.DataContext = _year;
             }
         }
 
@@ -127,6 +127,7 @@ namespace AniConApp.View
             }
         }
 
+        //temperarly returns list of 2015
         private List<Month> getYear(List<Convention> completeConList)//Dictionary<String, Dictionary<Month, List<Convention>>> getDictByYear(List<Convention> completeConList)
         {
             Month month;
@@ -222,12 +223,18 @@ namespace AniConApp.View
                 String s = ((sender as ListView).DataContext as Month).Name;
                 int index = monthView.Items.IndexOf((sender as ListView).DataContext as Month);
                 string p = monthView.Items[0].GetType().ToString();
+
+                Debug.WriteLine("sender : " + index);
+
                 //aniInfoView.name = ((sender as ListView).SelectedItem as AniconValues).Name;
                 // aniInfoView.location = Year[0].Items[(sender as ListView).SelectedIndex].Location;
                 Window.Current.Content = aniInfoView;
                 //this.Frame.Navigate(aniInfoView.GetType(),aniInfoView);
-                string location = _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].location;
-                string name = _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].name;
+
+                Convention con = Year.ElementAt(index).Items[(sender as ListView).SelectedIndex];
+
+                string location = con.location; //Year[index].Items[(sender as ListView).SelectedIndex].location;
+                string name = con.name; // _year[monthView.Items.IndexOf((sender as ListView).DataContext as Month)].Items[(sender as ListView).SelectedIndex].name;
                 aniInfoView.setInformation(location, name);
             }
            // (sender as ListView).SelectedIndex = -1;
