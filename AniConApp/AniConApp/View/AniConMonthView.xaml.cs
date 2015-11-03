@@ -47,17 +47,17 @@ namespace AniConApp.View
             August.Name = "August";
             Month June = new Month();
             June.Name = "June";
-            AniconValues Abunai = new AniconValues("Abunai", "Koningshof Veldhoven");
+            AniconValues Abunai = new AniconValues("Abunai", "Veldhoven,Locht 117");
             August.Items.Add(Abunai);
 
-            AniconValues con2 = new AniconValues("Con2", "Ergens maar nergens");
+            AniconValues con2 = new AniconValues("Con2", "Breda,Abdijstraat 1");
             August.Items.Add(con2);
 
-            AniconValues TsunaCon = new AniconValues("TsunaCon", "Rotterdam");
+            AniconValues TsunaCon = new AniconValues("TsunaCon", "Rotterdam,Rembrandtlaan 220");
             August.Items.Add(TsunaCon);
             Year.Add(August);
 
-            AniconValues con3 = new AniconValues("Con3", "test");
+            AniconValues con3 = new AniconValues("Con3", "Prinsenbeek,Witte Baan 1");
             June.Items.Add(con3);
             Year.Add(June);
             //AniCons.DataContext = August;
