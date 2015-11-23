@@ -9,11 +9,12 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image x:Name="image" HorizontalAlignment="Left" Height="190" Margin="188,415,-168,0" VerticalAlignment="Top" Width="340" Source="ms-appx:///Assets/Chibi-Holo-Big-Apple-holo-the-wise-wolf-21301345-438-436.jpg"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="190" Margin="193,345,-173,0" VerticalAlignment="Top" Width="340" Source="ms-appx:///Assets/Chibi-Holo-Big-Apple-holo-the-wise-wolf-21301345-438-436.jpg"/>
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,415,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="120" Width="340" IsReadOnly="true"/>
         <Button x:Name="button" Content="Go Back" HorizontalAlignment="Left" Margin="10,540,0,0" VerticalAlignment="Top" Height="90" Width="178" Click="button_Click"/>
 
         <Maps:MapControl  x:Name="RouteMap" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="400" Width="340" MapServiceToken="OlTIsVZFEATPrrIZ3tS8~s9ZzVHrzumHmLw-_x2pdnw~Apzyb2MNDKuvnyuhgQpaZaiAYGeQvJCNGb0NsoZISSpZjdTTgtInQDXlR0v2BEav" />
+        <Button x:Name="ShareButton" Content="Share" HorizontalAlignment="Left" Margin="193,552,0,0" VerticalAlignment="Top" Height="65" Width="157" Click="ShareButton_Click"/>
 
     </Grid>
 </Page>

@@ -18,6 +18,8 @@ using Windows.Devices.Geolocation;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.Appointments;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -32,6 +34,7 @@ namespace AniConApp.View
         static readonly AniConInfoView _instance = new AniConInfoView();
         MapLocation Destination;
         Geopoint currentLocation;
+        DataTransferManager dataTransferManager;
         
 
         public static AniConInfoView Instance
@@ -53,9 +56,23 @@ namespace AniConApp.View
         {
             this.InitializeComponent();
             location = "test";
+
+            dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += DataTransferManager_DataRequested;
+
             
             
-            
+        }
+
+        private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
+        {
+            DataRequest request = args.Request;
+
+
+            request.Data.SetText("test");
+            request.Data.Properties.Title = name;
+            request.Data.Properties.Description = location;
+
         }
 
         public async void getDestination()
@@ -75,6 +92,7 @@ namespace AniConApp.View
 
             MapLocationFinderResult result = await Windows.Services.Maps.MapLocationFinder.FindLocationsAsync(this.location, point);
             Destination = result.Locations[0];
+
 
             Canvas pin = new Canvas();
             Ellipse Ppin = new Ellipse() { Width = 25, Height = 25 };
@@ -102,6 +120,7 @@ namespace AniConApp.View
 
                             currentLocation =  new Geopoint(new BasicGeoposition() { Latitude = pos.Coordinate.Latitude, Longitude = pos.Coordinate.Longitude });
 
+                            
 
                             MapRouteFinderResult x = await MapRouteFinder.GetDrivingRouteAsync(currentLocation, Destination.Point);
                             Windows.UI.Xaml.Controls.Maps.MapRouteView route = new Windows.UI.Xaml.Controls.Maps.MapRouteView(x.Route);
@@ -146,6 +165,7 @@ namespace AniConApp.View
         {
             this.location = location;
             // textBox.Text += location;
+            this.name = name;
             this.textBox.Text = name + "\n" + location;
             getDestination2();
 
@@ -166,6 +186,11 @@ namespace AniConApp.View
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Window.Current.Content = monthView;
+        }
+
+        private void ShareButton_Click(object sender, RoutedEventArgs e)
+        {
+            DataTransferManager.ShowShareUI();
         }
     }
 }

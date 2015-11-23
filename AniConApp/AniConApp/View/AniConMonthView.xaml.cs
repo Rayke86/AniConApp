@@ -18,6 +18,7 @@ using AniConApp.Model;
 using System.Diagnostics;
 using Windows.UI;
 
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace AniConApp.View
@@ -31,6 +32,8 @@ namespace AniConApp.View
         public AniConInfoView aniInfoView = AniConInfoView.Instance;
         public ListView monthView = new ListView();
         public ListView yearView = new ListView();
+
+        
 
 
         private List<Convention> conList;
