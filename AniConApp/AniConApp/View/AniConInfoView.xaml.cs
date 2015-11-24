@@ -20,6 +20,7 @@ using System.Threading;
 using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Appointments;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -34,8 +35,7 @@ namespace AniConApp.View
         static readonly AniConInfoView _instance = new AniConInfoView();
         MapLocation Destination;
         Geopoint currentLocation;
-        DataTransferManager dataTransferManager;
-        
+        DataTransferManager dataTransferManager;        
 
         public static AniConInfoView Instance
         {
@@ -43,10 +43,7 @@ namespace AniConApp.View
             {
                 return _instance;
             }
-        }
-
-        
-        
+        }        
 
         public String name { get; set; }
         public String location { get; set; }
@@ -57,11 +54,15 @@ namespace AniConApp.View
             this.InitializeComponent();
             location = "test";
 
+
             dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += DataTransferManager_DataRequested;
 
             
-            
+
+            //TODO remove button
+            //button.Visibility = Visibility.Collapsed;
+
         }
 
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
@@ -187,6 +188,7 @@ namespace AniConApp.View
         {
             Window.Current.Content = monthView;
         }
+        
 
         private void ShareButton_Click(object sender, RoutedEventArgs e)
         {
