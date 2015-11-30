@@ -17,6 +17,7 @@ using Windows.Data.Json;
 using AniConApp.Model;
 using System.Diagnostics;
 using Windows.UI;
+using Windows.UI.Core;
 
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
@@ -46,8 +47,7 @@ namespace AniConApp.View
             this.InitializeComponent();
 
             //Resources.Values.ToList();
-
-
+           
             aniInfoView.setMonthView(this);           
             
         }

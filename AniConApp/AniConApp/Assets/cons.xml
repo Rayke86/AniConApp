@@ -28,7 +28,7 @@
 		<days>14</days>
     <month>Februari</month>  
 		<year>2016</year>
-		<location>Rotterdam</location>
+		<location>Rotterdam, Burgemeester Oudlaan 50</location>
     <logoUrl>./assets/logo/tsunacon.jpg</logoUrl>
 	</con>
   <con>
@@ -36,7 +36,7 @@
 		<days>26,27</days>
     <month>Maart</month>  
 		<year>2016</year>
-		<location>Oss</location>
+		<location>Utrecht, Jaarbeurs</location>
     <logoUrl>./assets/logo/dcc.png</logoUrl>
 	</con>
   <con>
