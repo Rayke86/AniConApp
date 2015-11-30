@@ -20,6 +20,7 @@ using System.Threading;
 using System.Diagnostics;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Appointments;
+using AniConApp.Model;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -35,6 +36,8 @@ namespace AniConApp.View
         MapLocation Destination;
         Geopoint currentLocation;
         DataTransferManager dataTransferManager;
+        Convention con;
+        String[] months =  new String[] { "Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December" };
         
 
         public static AniConInfoView Instance
@@ -57,8 +60,8 @@ namespace AniConApp.View
             this.InitializeComponent();
             location = "test";
 
-            dataTransferManager = DataTransferManager.GetForCurrentView();
-            dataTransferManager.DataRequested += DataTransferManager_DataRequested;
+            //dataTransferManager = DataTransferManager.GetForCurrentView();
+            //dataTransferManager.DataRequested += DataTransferManager_DataRequested;
 
             
             
@@ -161,12 +164,13 @@ namespace AniConApp.View
 
 
 
-        public void setInformation(string location,string name)
+        public void setInformation(Convention con)
         {
-            this.location = location;
+            this.location = con.location;
             // textBox.Text += location;
-            this.name = name;
-            this.textBox.Text = name + "\n" + location;
+            this.name = con.name;
+            this.textBox.Text = con.name + "\n" + con.location;
+            this.con = con;
             getDestination2();
 
         }
@@ -188,9 +192,58 @@ namespace AniConApp.View
             Window.Current.Content = monthView;
         }
 
-        private void ShareButton_Click(object sender, RoutedEventArgs e)
+        public static Rect GetElementRect(Windows.UI.Xaml.FrameworkElement element)
         {
-            DataTransferManager.ShowShareUI();
+            Windows.UI.Xaml.Media.GeneralTransform transform = element.TransformToVisual(null);
+            Point point = transform.TransformPoint(new Point());
+            return new Rect(point, new Size(element.ActualWidth, element.ActualHeight));
         }
+
+        private  void ShareButton_Click(object sender, RoutedEventArgs e)
+        {
+            // DataTransferManager.ShowShareUI();
+            addApointment(sender);
+
+        }
+
+        private async void addApointment(object sender)
+        {
+            // String x = await AppointmentManager.ShowAddAppointmentAsync(new Appointment { Location = this.location, Details = this.name, StartTime = new DateTime(2015, 11, 23, 12, 00, 00, 00) },new Rect { Height = RouteMap.Height, Width = RouteMap.Width, X = 0, Y = 0 });
+
+            //AppointmentStore x = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadWrite);
+            //x.ShowAddAppointmentAsync(new Appointment { Location = this.location, Details = this.name, StartTime = new DateTime(2015, 11, 23, 12, 00, 00, 00) }, new Rect { Height = RouteMap.Height, Width = RouteMap.Width, X = 0, Y = 0 });
+            Appointment appointment = new Windows.ApplicationModel.Appointments.Appointment();
+            appointment.Subject = this.name;
+            appointment.Location = this.location;
+            int month = Array.IndexOf(months, con.month);
+            month++;
+            appointment.StartTime = new DateTimeOffset(new DateTime(Convert.ToInt32(con.year), month, con.days[0]));
+
+            //AppointmentStore p = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadWrite);
+
+            try {
+                await Windows.ApplicationModel.Appointments.AppointmentManager.ShowEditNewAppointmentAsync(appointment);
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+         //   var rect = AniConInfoView.GetElementRect(sender as FrameworkElement);
+
+            //String appointmentId = await AppointmentManager.ShowAddAppointmentAsync(appointment,rect,Windows.UI.Popups.Placement.Default);
+            //if (appointmentId != String.Empty)
+            //{
+            //    //rootPage.NotifyUser("Appointment Id: " + appointmentId, NotifyType.StatusMessage);
+            //    int x = 0;
+            //}
+            //else
+            //{
+            //    //rootPage.NotifyUser("Appointment not added.", NotifyType.ErrorMessage);
+            //    int y = 0;
+            //}
+        }
+
+
     }
 }

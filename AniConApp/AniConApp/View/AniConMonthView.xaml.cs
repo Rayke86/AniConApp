@@ -143,9 +143,10 @@ namespace AniConApp.View
                 var con = ((sender as ListView).DataContext as Month).Items[(sender as ListView).SelectedIndex];
                 
                 string location = con.location; 
-                string name = con.name;  
+                string name = con.name; 
+                 
                 
-                aniInfoView.setInformation(location, name);                
+                aniInfoView.setInformation(con);                
             }
            
            
