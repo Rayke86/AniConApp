@@ -125,11 +125,11 @@ namespace AniConApp
         {
             Frame rootFrame = Window.Current.Content as Frame;
 
-            /*if (rootFrame.CanGoBack)
+            if (rootFrame.CanGoBack)
             {
                 e.Handled = true;
                 rootFrame.GoBack();
-            }*/
+            }
         }
     }
 }

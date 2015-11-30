@@ -69,6 +69,20 @@ namespace AniConApp.View
 
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.con= e.Parameter as Convention;
+            if (con != null)
+            {
+                this.location = con.location;
+                // textBox.Text += location;
+                this.name = con.name;
+                this.textBox.Text = con.name + "\n" + con.location;
+                //this.con = con;
+                getDestination2();
+            }
+        }
+
         private void DataTransferManager_DataRequested(DataTransferManager sender, DataRequestedEventArgs args)
         {
             DataRequest request = args.Request;
@@ -183,15 +197,15 @@ namespace AniConApp.View
         }
 
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            this.textBox.Text = this.location;
-        }
+        //protected override void OnNavigatedTo(NavigationEventArgs e)
+        //{
+        //    base.OnNavigatedTo(e);
+        //    //  this.textBox.Text = this.location;
+        //}
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            Window.Current.Content = monthView;
+           // Window.Current.Content = monthView;
         }
         
 
