@@ -135,18 +135,22 @@ namespace AniConApp.View
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            
             if ((sender as ListView).SelectedIndex != -1)
-            {                
-                Window.Current.Content = aniInfoView;
-                 
-                //get selected convention               
+            {
+
+                //Window.Current.Content = aniInfoView;
+
+                ////get selected convention               
                 var con = ((sender as ListView).DataContext as Month).Items[(sender as ListView).SelectedIndex];
-                
-                string location = con.location; 
-                string name = con.name; 
-                 
-                
-                aniInfoView.setInformation(con);                
+
+                //string location = con.location; 
+                //string name = con.name; 
+
+
+                //aniInfoView.setInformation(con);         
+
+                this.Frame.Navigate(typeof(AniConApp.View.AniConInfoView), con);
             }
            
            
