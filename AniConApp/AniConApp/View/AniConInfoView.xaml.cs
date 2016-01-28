@@ -22,6 +22,7 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Appointments;
 using AniConApp.Model;
 using Windows.UI.Core;
+using Windows.System;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -36,7 +37,7 @@ namespace AniConApp.View
         static readonly AniConInfoView _instance = new AniConInfoView();
         MapLocation Destination;
         Geopoint currentLocation;
-       // DataTransferManager dataTransferManager;
+        DataTransferManager dataTransferManager;
         Convention con;
         String[] months =  new String[] { "Januari", "Februari", "Maart", "April", "Mei", "Juni", "Juli", "Augustus", "September", "Oktober", "November", "December" };
 
@@ -58,11 +59,11 @@ namespace AniConApp.View
             this.InitializeComponent();
             location = "test";
 
-            //dataTransferManager = DataTransferManager.GetForCurrentView();
-            //dataTransferManager.DataRequested += DataTransferManager_DataRequested;
+            dataTransferManager = DataTransferManager.GetForCurrentView();
+            dataTransferManager.DataRequested += DataTransferManager_DataRequested;
 
 
-            
+
 
             //TODO remove button
             //button.Visibility = Visibility.Collapsed;
@@ -218,17 +219,13 @@ namespace AniConApp.View
 
         private  void ShareButton_Click(object sender, RoutedEventArgs e)
         {
-            // DataTransferManager.ShowShareUI();
+
             addApointment(sender);
 
         }
 
         private async void addApointment(object sender)
         {
-            // String x = await AppointmentManager.ShowAddAppointmentAsync(new Appointment { Location = this.location, Details = this.name, StartTime = new DateTime(2015, 11, 23, 12, 00, 00, 00) },new Rect { Height = RouteMap.Height, Width = RouteMap.Width, X = 0, Y = 0 });
-
-            //AppointmentStore x = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadWrite);
-            //x.ShowAddAppointmentAsync(new Appointment { Location = this.location, Details = this.name, StartTime = new DateTime(2015, 11, 23, 12, 00, 00, 00) }, new Rect { Height = RouteMap.Height, Width = RouteMap.Width, X = 0, Y = 0 });
             Appointment appointment = new Windows.ApplicationModel.Appointments.Appointment();
             appointment.Subject = this.name;
             appointment.Location = this.location;
@@ -236,31 +233,29 @@ namespace AniConApp.View
             month++;
             appointment.StartTime = new DateTimeOffset(new DateTime(Convert.ToInt32(con.year), month, con.days[0]));
 
-            //AppointmentStore p = await AppointmentManager.RequestStoreAsync(AppointmentStoreAccessType.AllCalendarsReadWrite);
 
             try {
                 await Windows.ApplicationModel.Appointments.AppointmentManager.ShowEditNewAppointmentAsync(appointment);
             }
             catch(Exception ex)
             {
-
+                System.Diagnostics.Debug.Write(ex);
             }
 
-         //   var rect = AniConInfoView.GetElementRect(sender as FrameworkElement);
-
-            //String appointmentId = await AppointmentManager.ShowAddAppointmentAsync(appointment,rect,Windows.UI.Popups.Placement.Default);
-            //if (appointmentId != String.Empty)
-            //{
-            //    //rootPage.NotifyUser("Appointment Id: " + appointmentId, NotifyType.StatusMessage);
-            //    int x = 0;
-            //}
-            //else
-            //{
-            //    //rootPage.NotifyUser("Appointment not added.", NotifyType.ErrorMessage);
-            //    int y = 0;
-            //}
         }
 
+        private async void ShowConName_Click(object sender, RoutedEventArgs e)
+        {
 
+            var options = new LauncherOptions();
+            options.TargetApplicationPackageFamilyName = "03cad505-416e-4dc0-9b09-d34badf5ebf8_2rk7jkcx89dyp";
+
+            ValueSet data = new ValueSet();
+            data.Add("data", con.name);
+
+
+            //DataTransferManager.ShowShareUI();
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("example:?data=12345"),options,data);
+        }
     }
 }

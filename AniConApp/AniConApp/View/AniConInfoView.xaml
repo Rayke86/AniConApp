@@ -9,12 +9,18 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image x:Name="image" HorizontalAlignment="Left" Height="190" Margin="193,345,-173,0" VerticalAlignment="Top" Width="340" Source="ms-appx:///Assets/Chibi-Holo-Big-Apple-holo-the-wise-wolf-21301345-438-436.jpg"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,415,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Height="120" Width="340" IsReadOnly="true"/>
+        <Viewbox>
+        <StackPanel Orientation="Vertical">
+            <Maps:MapControl  x:Name="RouteMap" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="400" Width="340" MapServiceToken="OlTIsVZFEATPrrIZ3tS8~s9ZzVHrzumHmLw-_x2pdnw~Apzyb2MNDKuvnyuhgQpaZaiAYGeQvJCNGb0NsoZISSpZjdTTgtInQDXlR0v2BEav" />
+        <Image x:Name="image" HorizontalAlignment="Left" Height="190" Margin="193,345,-173,0" VerticalAlignment="Top" Width="340" Source="ms-appx:///Assets/Chibi-Holo-Big-Apple-holo-the-wise-wolf-21301345-438-436.jpg" Visibility="Collapsed"/>
+            <TextBox x:Name="textBox" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Bottom" Height="120" Width="340" IsReadOnly="true"/>
         <Button x:Name="button" Content="Go Back" HorizontalAlignment="Left" Margin="10,540,0,0" VerticalAlignment="Top" Height="90" Width="178" Click="button_Click" Visibility="Collapsed"/>
 
-        <Maps:MapControl  x:Name="RouteMap" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="400" Width="340" MapServiceToken="OlTIsVZFEATPrrIZ3tS8~s9ZzVHrzumHmLw-_x2pdnw~Apzyb2MNDKuvnyuhgQpaZaiAYGeQvJCNGb0NsoZISSpZjdTTgtInQDXlR0v2BEav" />
-        <Button x:Name="ShareButton" Content="Share" HorizontalAlignment="Left" Margin="193,552,0,0" VerticalAlignment="Top" Height="65" Width="157" Click="ShareButton_Click"/>
-
+            <Grid>
+                <Button x:Name="ShareButton" Content="SetInCal" HorizontalAlignment="Left" Margin="193,10,0,0" VerticalAlignment="Bottom" Height="65" Width="157" Click="ShareButton_Click"/>
+                <Button x:Name="button1" Content="ShowConName" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Bottom" Width="157" Height="65" Click="ShowConName_Click"/>
+            </Grid>
+        </StackPanel>
+        </Viewbox>
     </Grid>
 </Page>

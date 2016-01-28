@@ -7,10 +7,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <!-- Margin="74,110,0,0"-->
     <Grid Background="Black">
         <!--{ThemeResource ApplicationPageBackgroundThemeBrush}">-->
-        <Image x:Name="image" HorizontalAlignment="Left" Height="224" Margin="74,110,0,0" VerticalAlignment="Top" Width="238" Source="ms-appx:///Assets/logo.png"/>
-        <Button x:Name="button" Content="Go to AniCons" HorizontalAlignment="Left" Margin="74,339,0,0" VerticalAlignment="Top" Height="84" Width="205" Foreground="White" Background="#FF571A1A" Click="gotoAnicons"/>
-
+        <Viewbox>
+            <StackPanel Orientation="Vertical">
+        <Image x:Name="image" HorizontalAlignment="Left" Height="224"  VerticalAlignment="Top" Width="238" Source="ms-appx:///Assets/logo.png"/>
+                <Button x:Name="button" Content="Go to AniCons" HorizontalAlignment="Left"  VerticalAlignment="Top" Height="84" Width="218" Foreground="White" Background="#FF571A1A" Click="gotoAnicons"/>
+            </StackPanel>
+        </Viewbox>
     </Grid>
 </Page>
